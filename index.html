@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title id="meta-title">AURA | Premium Lifestyle & Tech Boutique</title>
+  <meta name="description" id="meta-description" content="Explore our handpicked collection of minimalist furniture and next-generation smart devices. Premium design for modern living.">
+  <meta name="keywords" content="brochure, products, portfolio, electronics, furniture, premium, minimal, boutique">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+
+  <!-- Admin Mode Banner -->
+  <div id="admin-banner" class="admin-banner hidden">
+    <div class="admin-banner-content">
+      <span><i class="fa-solid fa-screwdriver-wrench"></i> <strong>Admin Mode Active:</strong> Customize your brochure. Changes are saved locally.</span>
+      <div class="admin-banner-actions">
+        <button id="btn-save-settings" class="btn-banner" onclick="openSettingsModal()"><i class="fa-solid fa-cog"></i> Settings</button>
+        <button id="btn-export-data" class="btn-banner btn-banner-accent" onclick="openExportModal()"><i class="fa-solid fa-download"></i> Save & Export Config</button>
+        <button id="btn-exit-admin" class="btn-banner btn-banner-outline" onclick="toggleAdminMode(false)">Exit Admin</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo" id="nav-logo">
+        <span class="logo-accent">.</span><span id="company-name-nav">AURA</span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu">
+        <div class="mobile-search-wrapper mobile-only">
+          <input type="text" id="mobile-search-input" placeholder="Search catalog..." oninput="handleMobileSearch(this.value)">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+        <ul id="nav-links">
+          <!-- Dynamic Links to Sections will go here -->
+        </ul>
+      </nav>
+      
+      <div class="nav-actions">
+        <!-- Search Toggle / Bar -->
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Search catalog..." oninput="handleSearch(this.value)">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        </div>
+        
+        <!-- Dark/Light Theme Toggle -->
+        <button id="theme-toggle" class="icon-btn" onclick="toggleTheme()" title="Toggle Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        
+        <!-- Admin Mode Toggle Switch -->
+        <button id="admin-toggle" class="admin-toggle-btn" onclick="toggleAdminMode()" title="Toggle Admin/Editor Mode">
+          <i class="fa-solid fa-lock"></i> <span>Edit Site</span>
+        </button>
+        
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="icon-btn mobile-only" onclick="toggleMobileMenu()">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="hero-bg-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <span class="hero-badge" id="company-tagline-hero">Premium Lifestyle & Tech Boutique</span>
+        <h1 id="hero-title">Curated Design for Modern Living</h1>
+        <p id="hero-subtitle">Explore our handpicked collection of minimalist furniture and next-generation smart devices.</p>
+        <div class="hero-buttons">
+          <a href="#catalog" class="btn btn-primary">Browse Catalog</a>
+          <button id="hero-admin-btn" class="btn btn-secondary" onclick="toggleAdminMode(true)">Customize This Site</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Quick Links (Category Pills) -->
+  <div class="category-nav-bar" id="category-nav-bar">
+    <div class="category-nav-container">
+      <span class="cat-nav-title">Sections:</span>
+      <div class="category-pills" id="category-pills">
+        <!-- Dynamic Category Pills -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Catalog Section -->
+  <main class="catalog-container" id="catalog">
+    <div class="catalog-header">
+      <h2>Our Collection</h2>
+      <div class="filter-controls">
+        <span id="results-count">Showing all products</span>
+        <button id="clear-search-btn" class="btn-text hidden" onclick="clearSearch()">Clear search</button>
+      </div>
+    </div>
+
+    <!-- Dynamic Sections and Products Container -->
+    <div id="sections-container" class="sections-container">
+      <!-- Loaded dynamically via app.js -->
+      <div class="loading-state">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+        <p>Loading catalog...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo"><span class="logo-accent">.</span><span id="company-name-footer">AURA</span></a>
+        <p id="company-tagline-footer">Premium Lifestyle & Tech Boutique</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul id="footer-nav-links">
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#catalog">Catalog</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>Inquiries</h4>
+        <p>Interested in our products? Get in touch directly.</p>
+        <div class="contact-actions">
+          <a href="#" id="footer-whatsapp" class="contact-link" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i> <span id="footer-whatsapp-text">WhatsApp</span>
+          </a>
+          <a href="#" id="footer-email" class="contact-link">
+            <i class="fa-regular fa-envelope"></i> <span id="footer-email-text">Email Us</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; <span id="footer-year">2026</span> <span id="company-name-copy">AURA</span>. All rights reserved. Created with 💻 Zero-Backend Brochure CMS.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================== -->
+  <!--               MODALS & DIALOGS             -->
+  <!-- ========================================== -->
+
+  <!-- 1. Product Detail Modal -->
+  <div id="product-detail-modal" class="modal">
+    <div class="modal-content modal-large">
+      <button class="modal-close" onclick="closeModal('product-detail-modal')"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="product-detail-grid">
+        <!-- Image Gallery Column -->
+        <div class="detail-gallery">
+          <div class="gallery-main-container">
+            <img id="detail-main-img" src="" alt="Product Image">
+            <button class="gallery-nav prev" onclick="navigateGallery(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="gallery-nav next" onclick="navigateGallery(1)"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+          <div class="gallery-thumbs" id="detail-thumbs">
+            <!-- Dynamic thumbnails -->
+          </div>
+        </div>
+        
+        <!-- Info Column -->
+        <div class="detail-info">
+          <span class="detail-category" id="detail-category">Category</span>
+          <h2 id="detail-name" class="detail-title">Product Name</h2>
+          <p id="detail-tagline" class="detail-tagline">Short product tagline goes here</p>
+          <div class="detail-price-box">
+            <span class="price-label">Price Estimate</span>
+            <span id="detail-price" class="detail-price">$0.00</span>
+          </div>
+          
+          <div class="detail-tabs">
+            <button class="tab-btn active" onclick="switchDetailTab('desc')">Overview</button>
+            <button class="tab-btn" onclick="switchDetailTab('specs')">Specifications</button>
+            <button class="tab-btn" onclick="switchDetailTab('features')">Key Features</button>
+          </div>
+          
+          <!-- Tab Contents -->
+          <div id="tab-desc" class="tab-content active">
+            <p id="detail-description" class="detail-description">Full product description...</p>
+          </div>
+          
+          <div id="tab-specs" class="tab-content">
+            <table class="specs-table">
+              <tbody id="detail-specs-table">
+                <!-- Specs rows -->
+              </tbody>
+            </table>
+          </div>
+          
+          <div id="tab-features" class="tab-content">
+            <ul class="features-list" id="detail-features-list">
+              <!-- Features bullets -->
+            </ul>
+          </div>
+          
+          <!-- CTA Action Box -->
+          <div class="detail-actions">
+            <h4>Interested in this item?</h4>
+            <p>Connect with our sales representative to check availability, shipping, or custom orders.</p>
+            <div class="action-buttons">
+              <a href="#" id="btn-inquire-whatsapp" class="btn btn-whatsapp" target="_blank">
+                <i class="fa-brands fa-whatsapp"></i> Inquire on WhatsApp
+              </a>
+              <a href="#" id="btn-inquire-email" class="btn btn-email">
+                <i class="fa-solid fa-envelope"></i> Send Email Inquiry
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Settings Modal (Admin) -->
+  <div id="settings-modal" class="modal">
+    <div class="modal-content modal-medium">
+      <button class="modal-close" onclick="closeModal('settings-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3><i class="fa-solid fa-cog animate-spin"></i> Website Configuration</h3>
+      <p class="modal-subtitle">Modify the branding, text, and contact information for your brochure site.</p>
+      
+      <form id="settings-form" onsubmit="saveSettingsForm(event)">
+        <div class="form-group-grid">
+          <div class="form-group">
+            <label for="set-company-name">Company / Brand Name</label>
+            <input type="text" id="set-company-name" required placeholder="AURA">
+          </div>
+          <div class="form-group">
+            <label for="set-currency">Currency Symbol</label>
+            <input type="text" id="set-currency" required maxlength="5" placeholder="$">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="set-company-tagline">Company Tagline / Sub-logo text</label>
+          <input type="text" id="set-company-tagline" placeholder="Premium Lifestyle & Tech Boutique">
+        </div>
+        
+        <div class="form-group">
+          <label for="set-hero-title">Hero Banner Title</label>
+          <input type="text" id="set-hero-title" required placeholder="Curated Design for Modern Living">
+        </div>
+        
+        <div class="form-group">
+          <label for="set-hero-subtitle">Hero Banner Subtitle</label>
+          <textarea id="set-hero-subtitle" rows="2" placeholder="Explore our handpicked collection of products..."></textarea>
+        </div>
+        
+        <h4 class="form-section-title"><i class="fa-solid fa-address-book"></i> Inquiry & Lead Generation</h4>
+        
+        <div class="form-group-grid">
+          <div class="form-group">
+            <label for="set-whatsapp">WhatsApp Number (with Country Code)</label>
+            <input type="text" id="set-whatsapp" placeholder="e.g. 919876543210 (No +, spaces, or dashes)">
+            <small class="form-tip">Direct customers to this number on click.</small>
+          </div>
+          <div class="form-group">
+            <label for="set-email">Inquiry Email Address</label>
+            <input type="email" id="set-email" placeholder="sales@yourbrand.com">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="set-password">Change Editor Password</label>
+          <input type="password" id="set-password" placeholder="Leave blank to keep current (default: Abcd@123)">
+          <small class="form-tip">This password restricts access to 'Edit Site' tooltips.</small>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('settings-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Settings</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 3. Product Add/Edit Modal (Admin) -->
+  <div id="product-form-modal" class="modal">
+    <div class="modal-content modal-medium">
+      <button class="modal-close" onclick="closeModal('product-form-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="product-modal-title">Add New Product</h3>
+      <p class="modal-subtitle">Fill in the product details below. Photos can be uploaded or specified via URL.</p>
+      
+      <form id="product-form" onsubmit="saveProductForm(event)">
+        <input type="hidden" id="form-product-id">
+        
+        <div class="form-group-grid">
+          <div class="form-group">
+            <label for="form-product-name">Product Name *</label>
+            <input type="text" id="form-product-name" required placeholder="Aura Watch Pro">
+          </div>
+          <div class="form-group">
+            <label for="form-product-section">Section Category *</label>
+            <select id="form-product-section" required>
+              <!-- Sections list loaded dynamically -->
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group-grid">
+          <div class="form-group">
+            <label for="form-product-tagline">Brief Tagline *</label>
+            <input type="text" id="form-product-tagline" required placeholder="Minimal smartwatch with sapphire screen.">
+          </div>
+          <div class="form-group">
+            <label for="form-product-price">Price (Numerical or Custom Text)</label>
+            <input type="text" id="form-product-price" placeholder="e.g. 299.00 or Contact us">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="form-product-desc">Product Description *</label>
+          <textarea id="form-product-desc" required rows="3" placeholder="Write a detailed description of the product..."></textarea>
+        </div>
+        
+        <!-- Product Images Uploader -->
+        <div class="form-group">
+          <label>Product Images *</label>
+          <div class="image-upload-wrapper">
+            <!-- Drag and drop box -->
+            <div class="upload-dropzone" id="upload-dropzone" onclick="triggerFileInput()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+              <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+              <p>Drag & Drop Images here, or <span>Browse files</span></p>
+              <small>JPEG, PNG, WebP (Images are auto-compressed for speed)</small>
+              <input type="file" id="form-file-input" multiple accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+            </div>
+            
+            <div class="or-separator"><span>OR</span></div>
+            
+            <div class="url-input-row">
+              <input type="text" id="form-image-url" placeholder="Paste an external image URL (e.g. Unsplash, imgur)">
+              <button type="button" class="btn btn-secondary btn-small" onclick="addImageUrl()">Add URL</button>
+            </div>
+            
+            <!-- Thumbnail list -->
+            <div class="uploaded-thumbnails" id="uploaded-thumbnails">
+              <!-- Thumbnails with delete button will be rendered here -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Dynamic Features Builder -->
+        <div class="form-group">
+          <div class="section-label-row">
+            <label>Key Features (Bulleted Highlights)</label>
+            <button type="button" class="btn-text btn-small" onclick="addFeatureInputRow()"><i class="fa-solid fa-plus"></i> Add Bullet</button>
+          </div>
+          <div class="dynamic-inputs-container" id="features-inputs-container">
+            <!-- Dynamic input rows -->
+          </div>
+        </div>
+        
+        <!-- Dynamic Specs Builder -->
+        <div class="form-group">
+          <div class="section-label-row">
+            <label>Technical Specifications (Table Rows)</label>
+            <button type="button" class="btn-text btn-small" onclick="addSpecInputRow()"><i class="fa-solid fa-plus"></i> Add Row</button>
+          </div>
+          <div class="dynamic-inputs-container" id="specs-inputs-container">
+            <!-- Dynamic input rows with label & value -->
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('product-form-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btn-save-product-form">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. Section Add/Edit Modal (Admin) -->
+  <div id="section-form-modal" class="modal">
+    <div class="modal-content modal-small">
+      <button class="modal-close" onclick="closeModal('section-form-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3 id="section-modal-title">Add New Section</h3>
+      <p class="modal-subtitle">Sections organize your products in groups (e.g., Electronics, Home Decor).</p>
+      
+      <form id="section-form" onsubmit="saveSectionForm(event)">
+        <input type="hidden" id="form-section-id">
+        
+        <div class="form-group">
+          <label for="form-section-title">Section Title *</label>
+          <input type="text" id="form-section-title" required placeholder="e.g. Premium Sound">
+        </div>
+        
+        <div class="form-group">
+          <label for="form-section-desc">Section Description</label>
+          <textarea id="form-section-desc" rows="2" placeholder="Brief tagline or description of what this section covers."></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('section-form-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Section</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 5. Export/Import Config Modal (Admin) -->
+  <div id="export-modal" class="modal">
+    <div class="modal-content modal-medium">
+      <button class="modal-close" onclick="closeModal('export-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3><i class="fa-solid fa-download"></i> Save & Export Website Data</h3>
+      <p class="modal-subtitle">Save your changes permanently so they load for every visitor on GitHub Pages.</p>
+      
+      <div class="export-steps">
+        <ol>
+          <li>Click the button below to download your updated database file (<code>data.json</code>).</li>
+          <li>Go to your GitHub repository and upload/replace the <code>data.json</code> file in the main folder.</li>
+          <li>Commit the change, and GitHub Pages will redeploy your new content automatically within minutes!</li>
+        </ol>
+      </div>
+      
+      <div class="export-actions-row">
+        <button class="btn btn-primary btn-full" onclick="downloadConfig()"><i class="fa-solid fa-file-arrow-down"></i> Download data.json</button>
+        <button class="btn btn-secondary btn-full" onclick="copyConfigToClipboard()"><i class="fa-solid fa-copy"></i> Copy JSON Code</button>
+      </div>
+      
+      <div class="json-preview-container">
+        <label>JSON Data Code Preview</label>
+        <textarea id="export-json-preview" readonly></textarea>
+      </div>
+
+      <div class="or-separator"><span>OR IMPORT AN EXISTING CONFIG</span></div>
+
+      <div class="import-section">
+        <p class="form-tip">Have a previous <code>data.json</code> file? Upload it to restore or load your catalog:</p>
+        <div class="import-upload-row">
+          <input type="file" id="import-file-input" accept=".json" onchange="importConfigFile(event)" class="hidden">
+          <button class="btn btn-secondary btn-full" onclick="triggerImportFileInput()"><i class="fa-solid fa-file-import"></i> Upload data.json File</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Password Authenticator Modal -->
+  <div id="password-modal" class="modal">
+    <div class="modal-content modal-small">
+      <button class="modal-close" onclick="closeModal('password-modal')"><i class="fa-solid fa-xmark"></i></button>
+      <h3><i class="fa-solid fa-lock"></i> Editor Authorization</h3>
+      <p class="modal-subtitle">Enter the administrator password to enable customization controls.</p>
+      
+      <form id="password-form" onsubmit="verifyPassword(event)">
+        <div class="form-group">
+          <label for="admin-password-input">Password</label>
+          <input type="password" id="admin-password-input" required placeholder="Enter password (default: Abcd@123)">
+        </div>
+        <div id="password-error" class="form-tip hidden" style="color: var(--color-danger); font-weight: 600; margin-bottom: 12px; margin-top: -10px;">
+          <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('password-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Unlock Editor</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Floating Action Buttons (FABs) in Admin Mode -->
+  <div class="admin-fabs" id="admin-fabs">
+    <button class="fab-btn fab-main" onclick="toggleFabMenu()" title="Admin Controls">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+    </button>
+    <div class="fab-menu" id="fab-menu">
+      <button class="fab-sub-btn" onclick="openProductFormModal()" title="Add New Product">
+        <i class="fa-solid fa-plus"></i> <span class="fab-label">Add Product</span>
+      </button>
+      <button class="fab-sub-btn" onclick="openSectionFormModal()" title="Add New Section">
+        <i class="fa-solid fa-folder-plus"></i> <span class="fab-label">Add Section</span>
+      </button>
+      <button class="fab-sub-btn" onclick="openSettingsModal()" title="Site Branding Settings">
+        <i class="fa-solid fa-cog"></i> <span class="fab-label">Site Settings</span>
+      </button>
+      <button class="fab-sub-btn fab-accent" onclick="openExportModal()" title="Download data.json">
+        <i class="fa-solid fa-cloud-arrow-down"></i> <span class="fab-label">Export Data</span>
+      </button>
+      <button class="fab-sub-btn fab-danger" onclick="resetToDefaultData()" title="Reset to default template">
+        <i class="fa-solid fa-rotate-left"></i> <span class="fab-label">Reset Default</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Custom Alert Toast -->
+  <div id="toast" class="toast hidden">
+    <span id="toast-message">Action completed successfully.</span>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="app.js"></script>
+</body>
+</html>
